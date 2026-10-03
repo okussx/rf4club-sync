@@ -5,6 +5,8 @@ izler ve yakalamaları oyuncunun RF4Club profiline gönderir.
 Oyuncu Bilgileri > İstatistikler ekranı açıldığında oyun istatistiklerini de
 okuyup aynı profile aktarır.
 
+[Windows kurulumunu indir](https://github.com/okussx/rf4club-sync/releases/download/v1.0.0/RF4Club-Sync-Setup.exe)
+
 ## Güvenlik sınırı
 
 Logger oyuna hiçbir klavye veya fare girdisi göndermez. Tıklama, tuş basma,
