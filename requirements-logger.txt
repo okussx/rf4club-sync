@@ -1,0 +1,8 @@
+# Minimal RF4Club Sync test runtime.
+# EasyOCR installs its required CPU inference dependencies (PyTorch, SciPy,
+# scikit-image and opencv-python-headless) automatically.
+easyocr
+mss
+numpy
+psutil
+requests
