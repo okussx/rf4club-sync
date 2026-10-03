@@ -1,0 +1,13 @@
+RF4Club Sync
+Copyright 2026 RF4Club contributors
+
+This product includes software derived from Russian-fishing-4-data-syphon,
+originally developed by Nelosss and distributed under the Apache License 2.0.
+
+RF4Club Sync contains substantial RF4Club modifications, including the
+read-only capture flow, RF4Club account pairing, catch synchronization,
+integrity metadata, offline delivery, and profile/card integration.
+
+The original Apache License 2.0 terms and attribution are preserved. New
+RF4Club-authored modifications are distributed under the same Apache License
+2.0 unless a source file states otherwise.
