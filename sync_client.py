@@ -6,6 +6,10 @@ from pathlib import Path
 import requests
 
 import config
+from version import APP_VERSION
+
+
+USER_AGENT = f"RF4Club-Sync/{APP_VERSION}"
 
 
 def _token_path():
@@ -58,6 +62,7 @@ def pair_device(code, api_base_url=None, device_name=None):
     base_url = configured_api_base_url(api_base_url)
     response = requests.post(
         f"{base_url}/api/sync/pair",
+        headers={"User-Agent": USER_AGENT},
         json={"code": code, "deviceName": device_name or config.DEVICE_NAME},
         timeout=config.HTTP_TIMEOUT_SECONDS,
     )
@@ -101,7 +106,10 @@ def send_catch(metadata, screenshot_path=None, token=None, api_base_url=None):
             }
         response = requests.post(
             f"{base_url}/api/sync/catches",
-            headers={"Authorization": f"Bearer {device_token}"},
+            headers={
+                "Authorization": f"Bearer {device_token}",
+                "User-Agent": USER_AGENT,
+            },
             data={"metadata": json.dumps(metadata, ensure_ascii=False)},
             files=files,
             timeout=config.HTTP_TIMEOUT_SECONDS,
@@ -120,7 +128,10 @@ def send_statistics(payload, token=None, api_base_url=None):
     base_url = configured_api_base_url(api_base_url)
     response = requests.post(
         f"{base_url}/api/sync/statistics",
-        headers={"Authorization": f"Bearer {device_token}"},
+        headers={
+            "Authorization": f"Bearer {device_token}",
+            "User-Agent": USER_AGENT,
+        },
         json=payload,
         timeout=config.HTTP_TIMEOUT_SECONDS,
     )

@@ -6,6 +6,11 @@ if (-not (Test-Path -LiteralPath $python)) {
     throw "Önce SETUP.bat ile geliştirme ortamını hazırla."
 }
 
+$versionFile = Join-Path $PSScriptRoot "version.py"
+$versionMatch = Select-String -LiteralPath $versionFile -Pattern '^APP_VERSION\s*=\s*"([^"]+)"$'
+if (-not $versionMatch) { throw "version.py içindeki APP_VERSION okunamadı." }
+$appVersion = $versionMatch.Matches[0].Groups[1].Value
+
 Write-Host "RF4Club Sync Windows paketi hazırlanıyor..." -ForegroundColor Cyan
 & $python -m pip install --disable-pip-version-check --progress-bar off "pyinstaller>=6.16,<7"
 
@@ -55,5 +60,5 @@ if (-not $iscc) {
 }
 
 $isccPath = if ($iscc -is [System.Management.Automation.CommandInfo]) { $iscc.Source } else { $iscc.FullName }
-& $isccPath "/DSourceDir=$packagedApp" "installer.iss"
-Write-Host "Hazır: release\RF4Club-Sync-Setup.exe" -ForegroundColor Green
+& $isccPath "/DSourceDir=$packagedApp" "/DAppVersion=$appVersion" "installer.iss"
+Write-Host "Hazır: release\RF4Club-Sync-Setup-v$appVersion.exe" -ForegroundColor Green

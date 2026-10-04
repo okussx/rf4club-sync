@@ -1,5 +1,7 @@
 #define AppName "RF4Club Sync"
-#define AppVersion "1.0.0"
+#ifndef AppVersion
+  #define AppVersion "1.1.0"
+#endif
 #define AppPublisher "RF4Club"
 #define AppURL "https://rf4club.com"
 #ifndef SourceDir
@@ -16,7 +18,7 @@ AppSupportURL={#AppURL}
 DefaultDirName={localappdata}\Programs\RF4Club Sync
 DefaultGroupName=RF4Club Sync
 OutputDir=release
-OutputBaseFilename=RF4Club-Sync-Setup
+OutputBaseFilename=RF4Club-Sync-Setup-v{#AppVersion}
 Compression=lzma2/max
 SolidCompression=yes
 PrivilegesRequired=lowest

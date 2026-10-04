@@ -27,6 +27,7 @@ import config
 import log_utils
 import sync_client
 import statistics_parser
+from version import APP_VERSION
 
 screen_utils = None
 
@@ -487,7 +488,7 @@ def monitor(pairing_code=None, api_base_url=None):
         else 0.0
     )
     last_statistics_snapshot = statistics_state["snapshotId"]
-    print("RF4Club Sync çalışıyor.")
+    print(f"RF4Club Sync v{APP_VERSION} çalışıyor.")
     print("Salt okunur mod: klavye/fare girdisi gönderilmez.")
     print(f"Ekran: {screen_size[0]}x{screen_size[1]}")
     sync_client.flush_pending()
@@ -564,6 +565,11 @@ def monitor(pairing_code=None, api_base_url=None):
 def main():
     parser = argparse.ArgumentParser(
         description="RF4 KEEP/TUT ekranını salt okunur biçimde RF4Club profiline aktarır."
+    )
+    parser.add_argument(
+        "--version",
+        action="version",
+        version=f"RF4Club Sync {APP_VERSION}",
     )
     parser.add_argument(
         "--pair",
