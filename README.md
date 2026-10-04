@@ -5,7 +5,7 @@ izler ve yakalamaları oyuncunun RF4Club profiline gönderir.
 Oyuncu Bilgileri > İstatistikler ekranı açıldığında oyun istatistiklerini de
 okuyup aynı profile aktarır.
 
-[Windows ZIP paketini indir (v1.1.0)](https://github.com/okussx/rf4club-sync/releases/download/v1.1.0/RF4Club-Sync-Windows-v1.1.0.zip)
+[Windows ZIP paketini indir (v1.1.1)](https://github.com/okussx/rf4club-sync/releases/download/v1.1.1/RF4Club-Sync-Windows-v1.1.1.zip)
 
 ## Güvenlik sınırı
 
@@ -30,7 +30,8 @@ Super Trophy kayıtlarının tam ekran görüntüsü denetim için saklanır.
 
 - RF4 işlemi çalışmıyorsa bekler.
 - Yakalama ekranındaki `KEEP` / `TUT` yazısını tetik olarak kullanır.
-- Balık adını ve varsa `Trophy` / `Super Trophy` etiketini okur.
+- Balık adını ve varsa turuncu `Trophy / Ödül / Ganimet` ya da mavi
+  `Rare Trophy / Süper Ödül / Süper Ganimet` etiketini okur.
 - Her yakalama için RF4Club profilinde tek kayıt oluşturur.
 - Normal yakalamalarda tam ekran görüntüsü kaydetmez veya göndermez.
 - Yalnız Trophy ve Super Trophy yakalamalarında tam ekran görüntüsünü kaydeder
@@ -45,7 +46,7 @@ Super Trophy kayıtlarının tam ekran görüntüsü denetim için saklanır.
 
 ## Kullanıcı kurulumu
 
-ZIP paketini çıkardıktan sonra `RF4Club-Sync-Setup-v1.1.0.exe` dosyasını çalıştır. Kurulum uygulamayı kullanıcı
+ZIP paketini çıkardıktan sonra `RF4Club-Sync-Setup-v1.1.1.exe` dosyasını çalıştır. Kurulum uygulamayı kullanıcı
 hesabına kurar ve masaüstü ile Başlat menüsüne **RF4Club Sync** kısayolu ekler.
 Python, pip, PyTorch veya OCR modeli ayrıca kurulmaz; bunlar uygulama paketinin
 içindedir.
@@ -75,7 +76,7 @@ python rf4club_sync.py
 ```
 
 Dağıtılabilir Windows kurulum paketini üretmek için `build-windows.ps1`
-çalıştırılır. Çıktı `release/RF4Club-Sync-Setup-v1.1.0.exe` olur.
+çalıştırılır. Çıktı `release/RF4Club-Sync-Setup-v1.1.1.exe` olur.
 
 ## OCR bölgeleri
 

@@ -368,10 +368,11 @@ def capture_integrity(image):
     return proof, fingerprint
 
 
-def record_catch(full_screen, fish_results, client_context):
+def record_catch(full_screen, fish_results, client_context, trophy_results=None):
     fish_name, confidence = extract_fish_name(fish_results)
-    trophy_type = detect_trophy_type(fish_results)
-    is_valuable = detect_valuable(fish_results)
+    classification_results = list(fish_results) + list(trophy_results or [])
+    trophy_type = detect_trophy_type(classification_results)
+    is_valuable = detect_valuable(classification_results)
     if not fish_name:
         print("Balık adı güvenilir biçimde okunamadı; kayıt gönderilmedi.")
         return
@@ -388,7 +389,7 @@ def record_catch(full_screen, fish_results, client_context):
         "isValuable": is_valuable,
         "caughtAt": caught_at,
         "ocrConfidence": confidence,
-        "rawOcr": fish_results,
+        "rawOcr": classification_results,
         "captureProofHash": proof_hash,
         "captureFingerprint": fingerprint,
         "clientContext": client_context,
@@ -523,11 +524,22 @@ def monitor(pairing_code=None, api_base_url=None):
         frame_size = (full_screen.shape[1], full_screen.shape[0])
         keep_region = scale_region(config.KEEP_REGION, frame_size)
         fish_region = scale_region(config.FISH_HEADER_REGION, frame_size)
+        trophy_label_region = scale_region(config.TROPHY_LABEL_REGION, frame_size)
         keep_results = ocr_region(full_screen, keep_region, "KeepTrigger")
         visible = keep_is_visible(keep_results)
         if visible and armed:
             fish_results = ocr_region(full_screen, fish_region, "FishHeader")
-            record_catch(full_screen, fish_results, client_context)
+            trophy_results = ocr_region(
+                full_screen,
+                trophy_label_region,
+                "TrophyLabel",
+            )
+            record_catch(
+                full_screen,
+                fish_results,
+                client_context,
+                trophy_results,
+            )
             armed = False
             absent_since = None
             sync_client.flush_pending()

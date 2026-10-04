@@ -1,6 +1,6 @@
 #define AppName "RF4Club Sync"
 #ifndef AppVersion
-  #define AppVersion "1.1.0"
+  #define AppVersion "1.1.1"
 #endif
 #define AppPublisher "RF4Club"
 #define AppURL "https://rf4club.com"

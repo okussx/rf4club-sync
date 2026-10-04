@@ -15,13 +15,21 @@ DATA_DIR.mkdir(parents=True, exist_ok=True)
 REFERENCE_RESOLUTION = (1920, 1080)
 KEEP_REGION = (760, 900, 400, 150)
 FISH_HEADER_REGION = (650, 20, 620, 180)
+TROPHY_LABEL_REGION = (560, 0, 800, 260)
 STATISTICS_TRIGGER_REGION = (650, 0, 650, 125)
 STATISTICS_SUMMARY_REGION = (150, 120, 1680, 215)
 STATISTICS_RECORDS_REGION = (240, 325, 1500, 625)
 
 KEEP_TRIGGER_WORDS = ("keep", "tut", "tutun")
-TROPHY_WORDS = ("trophy", "trofe", "kupa")
-SUPER_TROPHY_WORDS = ("super trophy", "super trofe", "super kupa")
+TROPHY_WORDS = ("trophy", "odul", "ganimet", "trofe", "kupa")
+SUPER_TROPHY_WORDS = (
+    "rare trophy",
+    "super trophy",
+    "super odul",
+    "super ganimet",
+    "super trofe",
+    "super kupa",
+)
 VALUABLE_WORDS = ("valuable", "degerli", "değerli")
 STATISTICS_TITLE_WORDS = ("oyuncu bilgileri", "player information")
 STATISTICS_TAB_WORDS = ("istatistikler", "statistics")
