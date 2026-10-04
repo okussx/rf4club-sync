@@ -5,7 +5,7 @@ izler ve yakalamaları oyuncunun RF4Club profiline gönderir.
 Oyuncu Bilgileri > İstatistikler ekranı açıldığında oyun istatistiklerini de
 okuyup aynı profile aktarır.
 
-[Windows kurulumunu indir (v1.1.0)](https://github.com/okussx/rf4club-sync/releases/download/v1.1.0/RF4Club-Sync-Setup-v1.1.0.exe)
+[Windows ZIP paketini indir (v1.1.0)](https://github.com/okussx/rf4club-sync/releases/download/v1.1.0/RF4Club-Sync-Windows-v1.1.0.zip)
 
 ## Güvenlik sınırı
 
@@ -45,7 +45,7 @@ Super Trophy kayıtlarının tam ekran görüntüsü denetim için saklanır.
 
 ## Kullanıcı kurulumu
 
-`RF4Club-Sync-Setup-v1.1.0.exe` dosyasını çalıştır. Kurulum uygulamayı kullanıcı
+ZIP paketini çıkardıktan sonra `RF4Club-Sync-Setup-v1.1.0.exe` dosyasını çalıştır. Kurulum uygulamayı kullanıcı
 hesabına kurar ve masaüstü ile Başlat menüsüne **RF4Club Sync** kısayolu ekler.
 Python, pip, PyTorch veya OCR modeli ayrıca kurulmaz; bunlar uygulama paketinin
 içindedir.
