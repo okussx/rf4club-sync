@@ -125,7 +125,29 @@ def _serialize(items):
     ]
 
 
-def _record_payload(items):
+def _record_length(lines, record_key):
+    candidates = []
+    for line_index, line in enumerate(lines):
+        normalized = _normalize(line)
+        for match in re.finditer(r"(\d+[,.]?\d*)\s*(cm|m)\b", line, re.IGNORECASE):
+            value = _parse_decimal(match.group(1))
+            if value is None:
+                continue
+            score = 0
+            if record_key == "recordCast":
+                score += 100 if re.search(r"[,.]", match.group(1)) else 0
+                if any(word in normalized for word in ("rod", "kamış", "kamis", "carp", "reel", "makine")):
+                    score -= 200
+                if match.group(2).lower() == "m" and 1 <= value <= 250:
+                    score += 20
+            candidates.append((score, -line_index, value, match.group(2).lower()))
+    if not candidates:
+        return None, None
+    candidates.sort(reverse=True)
+    return candidates[0][2], candidates[0][3]
+
+
+def _record_payload(items, record_key=None):
     ordered = sorted(
         items,
         key=lambda item: (
@@ -136,12 +158,12 @@ def _record_payload(items):
     lines = [str(item.get("text") or "").strip() for item in ordered if str(item.get("text") or "").strip()]
     joined = " | ".join(lines)
     weight_match = re.search(r"(\d+[,.]\d+)\s*k", joined, re.IGNORECASE)
-    length_match = re.search(r"(\d+[,.]?\d*)\s*(cm|m)\b", joined, re.IGNORECASE)
+    length, length_unit = _record_length(lines, record_key)
     return {
         "lines": lines,
         "weightKg": _parse_decimal(weight_match.group(1)) if weight_match else None,
-        "length": _parse_decimal(length_match.group(1)) if length_match else None,
-        "lengthUnit": length_match.group(2).lower() if length_match else None,
+        "length": length,
+        "lengthUnit": length_unit,
         "rawOcr": _serialize(ordered),
     }
 
@@ -151,6 +173,7 @@ def build_statistics_payload(
     record_results,
     screen_size,
     summary_card_results=None,
+    record_card_results=None,
 ):
     summary_groups = summary_card_results or _assign(
         summary_results,
@@ -158,7 +181,7 @@ def build_statistics_payload(
         screen_size,
         SUMMARY_CARDS,
     )
-    record_groups = _assign(
+    record_groups = record_card_results or _assign(
         record_results,
         config.STATISTICS_RECORDS_REGION,
         screen_size,
@@ -175,7 +198,7 @@ def build_statistics_payload(
         )
 
     records = {
-        key: _record_payload(items)
+        key: _record_payload(items, key)
         for key, items in record_groups.items()
     }
     stable = {"summary": summary, "records": {key: value["lines"] for key, value in records.items()}}
@@ -195,6 +218,21 @@ def build_statistics_payload(
                 if summary_card_results
                 else _serialize(summary_results)
             ),
-            "records": _serialize(record_results),
+            "records": (
+                {key: _serialize(items) for key, items in record_groups.items()}
+                if record_card_results
+                else _serialize(record_results)
+            ),
         },
     }
+
+
+def is_valid_statistics_payload(payload, minimum_summary_values=5):
+    summary = payload.get("summary") if isinstance(payload, dict) else None
+    if not isinstance(summary, dict):
+        return False
+    readable_values = sum(
+        value is not None and isinstance(value, (int, float)) and value >= 0
+        for value in summary.values()
+    )
+    return readable_values >= minimum_summary_values

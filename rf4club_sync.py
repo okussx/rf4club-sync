@@ -419,7 +419,6 @@ def record_catch(full_screen, fish_results, client_context, trophy_results=None)
 
 
 def record_statistics(full_screen, screen_size, previous_snapshot=None):
-    records_region = scale_region(config.STATISTICS_RECORDS_REGION, screen_size)
     print("İstatistik ekranı okunuyor; bu işlem kısa bir süre alabilir...")
     summary_card_results = {}
     for key, reference_region in statistics_parser.SUMMARY_CARDS.items():
@@ -429,13 +428,26 @@ def record_statistics(full_screen, screen_size, previous_snapshot=None):
             f"StatisticsSummary.{key}",
             allowlist="0123456789.,kg ",
         )
-    record_results = ocr_region(full_screen, records_region, "StatisticsRecords")
+    record_card_results = {}
+    for key, reference_region in statistics_parser.RECORD_CARDS.items():
+        record_card_results[key] = ocr_region(
+            full_screen,
+            scale_region(reference_region, screen_size),
+            f"StatisticsRecord.{key}",
+        )
     payload = statistics_parser.build_statistics_payload(
         [],
-        record_results,
+        [],
         screen_size,
         summary_card_results=summary_card_results,
+        record_card_results=record_card_results,
     )
+    if not statistics_parser.is_valid_statistics_payload(payload):
+        print(
+            "İstatistik verileri doğrulanamadı. Oyuncu bilgileri içindeki "
+            "İstatistikler sekmesinin açık olduğundan emin ol."
+        )
+        return previous_snapshot, False
     if payload["snapshotId"] == previous_snapshot:
         print("İstatistik ekranı değişmedi; tekrar gönderilmedi.")
         return payload["snapshotId"], True
